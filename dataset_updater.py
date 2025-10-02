@@ -8,7 +8,7 @@ from pathlib import Path
 
 def get_last_update(url):
     try:
-        print("Getting last update...")
+        print("Getting last update date...")
         r = requests.get(url)
         r.raise_for_status()
         soup = BeautifulSoup(r.text, "html.parser")
@@ -40,20 +40,19 @@ def is_updated(url, filepath):
     return True
 
 
-def download_csv(csv_url):
+def download_csv(league_config: dict):
     DATA_FOLDER = Path("data")
     DATA_FOLDER.mkdir(exist_ok = True)
+    
+    url = league_config["csv_url"]
 
     try:
-        r = requests.get(csv_url)
+        r = requests.get(url)
         r.raise_for_status()
 
-        if "BRA" in csv_url:
-            name = "brasileirao"
-        else:
-            name = "premierleague"
+        name = league_config["file_name"]
 
-        download_path = DATA_FOLDER / (name + ".csv")    
+        download_path = DATA_FOLDER / name   
         with open(download_path, "wb") as f:
             f.write(r.content)
 
@@ -66,11 +65,11 @@ def download_csv(csv_url):
 
 
 def update_csv(league_config: dict):
-    if is_updated(league_config['check_url'], league_config['filepath']):
+    if is_updated(league_config["check_url"], league_config["filepath"]):
         print("CSV is updated.")
         return
 
     print("Update avaliable!")
-    download_csv(league_config['csv_url'])
+    download_csv(league_config)
 
     return
