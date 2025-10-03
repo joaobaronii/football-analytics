@@ -1,5 +1,3 @@
-FILEPATH = "/data"
-
 LEAGUE_CONFIG = {
     "brasileirao": {
         "check_url": "https://www.football-data.co.uk/brazil.php",
@@ -11,6 +9,6 @@ LEAGUE_CONFIG = {
         "check_url": "https://www.football-data.co.uk/englandm.php",
         "csv_url": "https://www.football-data.co.uk/mmz4281/2526/E0.csv",
         "filepath": "data/premierleague.csv",
-        "file_name": "premierleague.csv",
+        "file_name": "premierleague2025.csv",
     },
 }

@@ -5,6 +5,7 @@ from pathlib import Path
 import requests
 from bs4 import BeautifulSoup
 
+import config
 
 def get_last_update(url):
     try:
@@ -76,3 +77,6 @@ def update_csv(league_config: dict):
     download_csv(league_config)
 
     return
+
+if __name__ == "__main__":
+    update_csv(config.LEAGUE_CONFIG["premier"])
