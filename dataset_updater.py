@@ -34,8 +34,13 @@ def is_updated(url, filepath):
     site_date = get_last_update(url)
     file_date = get_file_last_modified(filepath)
 
+    if site_date is None:
+        print("Could not get update date from the website.")
+        return True
+
     if file_date is None or site_date > file_date:
         return False
+    
     return True
 
 
