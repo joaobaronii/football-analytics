@@ -1,12 +1,11 @@
 import pandas as pd
 from data_loader import load_brasileirao
 
-
-TEAM_LIST_BRASILEIRAO = ['Palmeiras', 'Sport Recife', 'Figueirense', 'Botafogo RJ', 'Corinthians', 'Internacional', 'Ponte Preta', 'Bahia', 'Cruzeiro', 'Vasco', 'Atletico GO', 'Flamengo RJ', 'Portuguesa', 'Nautico', 'Atletico-MG', 'Coritiba', 'Santos', 'Sao Paulo', 'Fluminense', 'Gremio', 'Vitoria', 'Criciuma', 'Athletico-PR', 'Goias', 'Chapecoense-SC', 'Avai', 'Joinville', 'Santa Cruz', 'America MG', 'Parana', 'Ceara', 'CSA', 'Fortaleza', 'Bragantino', 'Cuiaba', 'Juventude', 'Mirassol']
-
 class Brasileirao:
     def __init__(self, df):
         self.df = df
+        self.team_list = df["Home"].unique().tolist()
+
     
     def __repr__(self):
         return self.df.to_string()
@@ -19,7 +18,7 @@ class Brasileirao:
         if team1 == team2:
             raise ValueError(f"{team1} X {team2}?")
         
-        if team1 not in TEAM_LIST_BRASILEIRAO or team2 not in TEAM_LIST_BRASILEIRAO:
+        if team1 not in self.team_list or team2 not in self.team_list:
             raise ValueError(f"Team not in the dataset.")
         
         if only_home:
@@ -33,8 +32,11 @@ class Brasileirao:
 
 if __name__ == "__main__":
     df = Brasileirao(load_brasileirao())
+    print(df.team_list)
     df = df.by_year(2023)
     df = df.head_to_head("Corinthians", "Cruzeiro")
 
     print(df)
+    print(df.team_list)
+
 
