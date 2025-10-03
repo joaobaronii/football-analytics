@@ -1,6 +1,5 @@
 import pandas as pd
 
-# TODO load_premierleague -> tudo da premier
 
 def load_brasileirao():
     columns = ["Season", "Date", "Home", "Away", "HG", "AG", "Res"]
@@ -11,10 +10,35 @@ def load_brasileirao():
 
     df = df.set_index("Date")
 
+    df = df.rename(columns={"Res": "FTR"})
+
     return df
 
+
 def load_premier_league_2025():
-    columns = ["Date", "HomeTeam", "AwayTeam", "FTHG", "FTAG","FTR", "HTHG", "HTAG","Referee", "HS", "AS", "HST", "AST", "HC", "AC", "HF", "AF", "HY", "AY", "HR", "AR"]
+    columns = [
+        "Date",
+        "HomeTeam",
+        "AwayTeam",
+        "FTHG",
+        "FTAG",
+        "FTR",
+        "HTHG",
+        "HTAG",
+        "Referee",
+        "HS",
+        "AS",
+        "HST",
+        "AST",
+        "HC",
+        "AC",
+        "HF",
+        "AF",
+        "HY",
+        "AY",
+        "HR",
+        "AR",
+    ]
     # FTH/AG = full time home/away goals; FTR = full time result; HTH/AG = half time home/away goals; H/AS = home/away shots; H/AST = home/away shots on target;
     # H/AC = home/away corners; H/AF = H/A fouls committed; H/AY = H/A yellow cards; H/AR = H/A red cards
 
@@ -23,9 +47,10 @@ def load_premier_league_2025():
     print("Data successfully loaded!")
 
     df = df.set_index("Date")
-    df = df.rename(columns={"HomeTeam":"Home", "AwayTeam":"Away"})
+    df = df.rename(columns={"HomeTeam": "Home", "AwayTeam": "Away"})
 
     return df
+
 
 if __name__ == "__main__":
     df = load_premier_league_2025()

@@ -7,6 +7,7 @@ from bs4 import BeautifulSoup
 
 import config
 
+
 def get_last_update(url):
     try:
         print("Getting last update date...")
@@ -41,7 +42,7 @@ def is_updated(url, filepath):
 
     if file_date is None or site_date > file_date:
         return False
-    
+
     return True
 
 
@@ -77,6 +78,7 @@ def update_csv(league_config: dict):
     download_csv(league_config)
 
     return
+
 
 if __name__ == "__main__":
     update_csv(config.LEAGUE_CONFIG["premier"])

@@ -3,7 +3,6 @@ from typing import Literal
 
 from scipy.stats import poisson
 
-# TODO gols por jogo, chutes/cartões/escanteio/faltas/impedimento do time por jogo(premier)
 
 def calculate_prob(
     mean: float, threshold: float, mode: Literal["over", "under", "exactly"]
