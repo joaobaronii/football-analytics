@@ -1,5 +1,5 @@
 import pandas as pd
-from league import League
+from .league import League
 
 
 class Premier(League):
