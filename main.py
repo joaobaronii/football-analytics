@@ -1,9 +1,9 @@
-import config 
-from dataset_updater import update_csv
+from data_loader import load_brasileirao
+from data_processor import Brasileirao
 
 def main():
 
-    
+    df = Brasileirao(load_brasileirao())
 
     return
 

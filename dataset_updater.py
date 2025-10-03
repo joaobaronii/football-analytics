@@ -1,10 +1,10 @@
 import os
 from datetime import datetime
+from pathlib import Path
 
 import requests
 from bs4 import BeautifulSoup
 
-from pathlib import Path
 
 def get_last_update(url):
     try:
@@ -26,9 +26,8 @@ def get_file_last_modified(filepath):
     if os.path.exists(filepath):
         time = os.path.getmtime(filepath)
         return datetime.fromtimestamp(time)
-    
-    return None
 
+    return None
 
 
 def is_updated(url, filepath):
@@ -42,8 +41,8 @@ def is_updated(url, filepath):
 
 def download_csv(league_config: dict):
     DATA_FOLDER = Path("data")
-    DATA_FOLDER.mkdir(exist_ok = True)
-    
+    DATA_FOLDER.mkdir(exist_ok=True)
+
     url = league_config["csv_url"]
 
     try:
@@ -52,7 +51,7 @@ def download_csv(league_config: dict):
 
         name = league_config["file_name"]
 
-        download_path = DATA_FOLDER / name   
+        download_path = DATA_FOLDER / name
         with open(download_path, "wb") as f:
             f.write(r.content)
 
@@ -61,7 +60,6 @@ def download_csv(league_config: dict):
 
     except requests.exceptions.RequestException as e:
         print(f"Error downloading file: {e}")
-        
 
 
 def update_csv(league_config: dict):
