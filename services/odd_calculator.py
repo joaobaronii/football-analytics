@@ -32,6 +32,16 @@ def calculate_house_edge(fair_odd, house_odd):
     edge = (fair_odd - house_odd) / fair_odd
     return edge * 100
 
+def calculate_all(mean, threshold, mode, house_odd=None):
+    prob = calculate_prob(mean, threshold, mode)
+
+    fair_odd = calculate_odd(prob)
+
+    if house_odd is not None:
+        house_edge = calculate_house_edge(fair_odd, house_odd)
+    
+    return prob, fair_odd, house_edge
+
 
 if __name__ == "__main__":
     mean = float(input("Digite a média do evento por partida: "))

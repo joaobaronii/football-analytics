@@ -15,7 +15,7 @@ def load_brasileirao():
     return df
 
 
-def load_premier_league_2025():
+def load_premier_25_26():
     columns = [
         "Date",
         "HomeTeam",
@@ -42,8 +42,8 @@ def load_premier_league_2025():
     # FTH/AG = full time home/away goals; FTR = full time result; HTH/AG = half time home/away goals; H/AS = home/away shots; H/AST = home/away shots on target;
     # H/AC = home/away corners; H/AF = H/A fouls committed; H/AY = H/A yellow cards; H/AR = H/A red cards
 
-    print("Loading Premier League 2025 data...")
-    df = pd.read_csv("data/premierleague2025.csv", usecols=columns)
+    print("Loading Premier League 25/26 data...")
+    df = pd.read_csv("data/premierleague25-26.csv", usecols=columns)
     print("Data successfully loaded!")
 
     df = df.set_index("Date")
@@ -53,5 +53,5 @@ def load_premier_league_2025():
 
 
 if __name__ == "__main__":
-    df = load_premier_league_2025()
+    df = load_premier_25_26()
     print(df)

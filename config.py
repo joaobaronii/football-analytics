@@ -8,7 +8,7 @@ LEAGUE_CONFIG = {
     "premier": {
         "check_url": "https://www.football-data.co.uk/englandm.php",
         "csv_url": "https://www.football-data.co.uk/mmz4281/2526/E0.csv",
-        "filepath": "data/premierleague.csv",
-        "file_name": "premierleague2025.csv",
+        "filepath": "data/premierleague25-26.csv",
+        "file_name": "premierleague25-26.csv",
     },
 }
