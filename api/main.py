@@ -1,3 +1,3 @@
 from fastapi import FastAPI
 
-app = FastAPI(title = "Football Analyzer")
+app = FastAPI(title = "Football Analytics")
