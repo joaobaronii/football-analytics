@@ -51,6 +51,12 @@ def load_premier_25_26():
 
     return df
 
+def reload_dataframe(league_name):
+    if league_name == "Brasileirao":
+        return load_brasileirao()
+    if league_name == "Premier League":
+        return load_premier_25_26()
+
 
 if __name__ == "__main__":
     df = load_premier_25_26()

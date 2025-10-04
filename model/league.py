@@ -7,6 +7,7 @@ class League:
         self.team_list = pd.concat([df["Home"], df["Away"]]).unique().tolist()
         self.dataset_stats = []
         self.stat_map = {}
+        self.name = None
 
     def __repr__(self):
         return self.df.to_string()
@@ -22,13 +23,13 @@ class League:
 
         if only_home:
             filtered_df = self.df.loc[(self.df.Home == team)]
-            return self.__class__(filtered_df)
+            return filtered_df
         if only_away:
             filtered_df = self.df.loc[(self.df.Away == team)]
-            return self.__class__(filtered_df)
+            return filtered_df
 
         filtered_df = self.df.loc[(self.df.Home == team) | (self.df.Away == team)]
-        return self.__class__(filtered_df)
+        return filtered_df
 
     def head_to_head(self, team1, team2, only_home=False):
         if team1 == team2:
@@ -41,13 +42,13 @@ class League:
 
         if only_home:
             filtered_df = self.df.loc[(self.df.Home == team1) & (self.df.Away == team2)]
-            return self.__class__(filtered_df)
+            return filtered_df
 
         check = [team1, team2]
         filtered_df = self.df.loc[
             (self.df.Home.isin(check)) & (self.df.Away.isin(check))
         ]
-        return self.__class__(filtered_df)
+        return filtered_df
 
     def get_stat_mean(self, stat):
         if stat not in self.dataset_stats:

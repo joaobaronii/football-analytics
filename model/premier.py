@@ -35,6 +35,7 @@ class Premier(League):
             "yellow_cards": {"home": "HY", "away": "AY"},
             "red_cards": {"home": "HR", "away": "AR"},
         }
+        self.name = "Premier League"
 
     def goals_second_half_per_game(self, team):
         if team not in self.team_list:
