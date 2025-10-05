@@ -77,7 +77,10 @@ def handle_team(league: League, calculator_status: bool):
                             f"Won probability = {percent: .2f}%; Fair odd = {fair_odd: .2f}; House edge = {house_edge: .2f}%"
                         )
                     else:
-                        print(f"Won probability = {prob}; Fair odd = {fair_odd}")
+                        print(f"Won probability = {percent: .2f}%; Fair odd = {fair_odd: .2f}")
+                    print("THIS NUMBERS DOES NOT CONSIDER EVERY FACTORS TORY INVOLVED IN A ODD, IT JUST LOOK INTO THE AVERAGE.")
+                    print("Example of factors not in the math: Home/Away, Teams lineups(injuries, suspensions), Teams form...")
+                    
             case "0":
                 return
             case _:
