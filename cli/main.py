@@ -2,7 +2,7 @@ import sys
 
 import config
 import services.data_loader as loader
-import services.handlers as handler
+import services.cli_handlers as handler
 from model.brasileirao import Brasileirao
 from model.premier import Premier
 from services.dataset_updater import update_csv

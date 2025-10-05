@@ -77,10 +77,16 @@ def handle_team(league: League, calculator_status: bool):
                             f"Won probability = {percent: .2f}%; Fair odd = {fair_odd: .2f}; House edge = {house_edge: .2f}%"
                         )
                     else:
-                        print(f"Won probability = {percent: .2f}%; Fair odd = {fair_odd: .2f}")
-                    print("THIS NUMBERS DOES NOT CONSIDER EVERY FACTORS TORY INVOLVED IN A ODD, IT JUST LOOK INTO THE AVERAGE.")
-                    print("Example of factors not in the math: Home/Away, Teams lineups(injuries, suspensions), Teams form...")
-                    
+                        print(
+                            f"Won probability = {percent: .2f}%; Fair odd = {fair_odd: .2f}"
+                        )
+                    print(
+                        "THIS NUMBERS DOES NOT CONSIDER EVERY FACTORS TORY INVOLVED IN A ODD, IT JUST LOOK INTO THE AVERAGE."
+                    )
+                    print(
+                        "Example of factors not in the math: Home/Away, Teams lineups(injuries, suspensions), Teams form..."
+                    )
+
             case "0":
                 return
             case _:
@@ -97,6 +103,9 @@ def handle_h2h(league: League):
     else:
         only_home = False
 
+    if league.name == "Brasileirao":
+        league.df = handle_year_range(league)
+
     league.df = league.head_to_head(team1, team2, only_home)
     if league.df.empty:
         print(f"\nNo matches found between {team1} and {team2}.")
@@ -105,14 +114,13 @@ def handle_h2h(league: League):
     summary1 = league.get_result_summary(team1)
     summary2 = league.get_result_summary(team2)
 
-
-    if league.name == "Brasileirao":
-        handle_year_range(league)
-
     print("\nMatchup Summary:")
-    print(f"{team1}: Wins: {summary1['W']}, Losses: {summary1['L']}, Draws: {summary1['D']}")
-    print(f"{team2}: Wins: {summary2['W']}, Losses: {summary2['L']}, Draws: {summary2['D']}")
-
+    print(
+        f"{team1}: Wins: {summary1['W']}, Losses: {summary1['L']}, Draws: {summary1['D']}"
+    )
+    print(
+        f"{team2}: Wins: {summary2['W']}, Losses: {summary2['L']}, Draws: {summary2['D']}"
+    )
 
     stat_status = input("Do you want to get some matchup stat? (Y/N): ").upper()
 
@@ -123,9 +131,11 @@ def handle_h2h(league: League):
             print(stats_list)
             stat = input("Enter the stat: ")
             if stat not in stats_list:
-                    print("stat not in the list")
+                print("stat not in the list")
 
-        print(f"{stat} in this matchup: {team1} = {league.get_team_stat_sum(team1, stat)}; {team2} = {league.get_team_stat_sum(team2, stat)}")
+        print(
+            f"{stat} in this matchup: {team1} = {league.get_team_stat_sum(team1, stat)}; {team2} = {league.get_team_stat_sum(team2, stat)}"
+        )
 
 
 def handle_year_range(league: League):
@@ -136,7 +146,7 @@ def handle_year_range(league: League):
 
     is_range = input("Do you want to specify an end year for a range? (Y/N): ").upper()
     if is_range == "Y":
-        end_year = int("Enter the end year(2012-2025): ")
+        end_year = int(input("Enter the end year(2012-2025): "))
         if not 2012 <= end_year <= 2025:
             print("Year not available.")
             return None, None
