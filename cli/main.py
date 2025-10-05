@@ -52,7 +52,7 @@ def main():
                     calculator_status = False
                 handler.handle_team(league_obj, calculator_status) 
             case "2":
-                handler.handle_h2h(league_obj)  # TODO
+                handler.handle_h2h(league_obj)
             case "3":
                 handler.handle_league(league_obj)
             case "4":
