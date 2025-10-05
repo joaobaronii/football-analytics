@@ -71,9 +71,10 @@ def handle_team(league: League, calculator_status: bool):
 
                 if calculator_status:
                     prob, fair_odd, house_edge = handle_calculator(stat_avg)
+                    percent = prob * 100
                     if house_edge:
                         print(
-                            f"Won probability = {prob}; Fair odd = {fair_odd}; House edge = {house_edge}"
+                            f"Won probability = {percent: .2f}%; Fair odd = {fair_odd: .2f}; House edge = {house_edge: .2f}%"
                         )
                     else:
                         print(f"Won probability = {prob}; Fair odd = {fair_odd}")
