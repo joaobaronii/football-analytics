@@ -1,4 +1,5 @@
 import pandas as pd
+
 from .league import League
 
 
@@ -37,30 +38,40 @@ class Premier(League):
         }
         self.name = "Premier League"
 
-    def goals_second_half_per_game(self, team):
+    def goals_second_half_sum(self, team):
         if team not in self.team_list:
             raise ValueError(
                 "Team not in the dataset. Teams available: " + str(self.team_list)
             )
 
-        ht_goals = self.get_total_stat_sum(team, "ht_goals")
-        total_goals = self.get_total_stat_sum(team, "goals")
-
-        games = self.get_games_played(team)
+        ht_goals = self.get_team_stat_sum(team, "ht_goals")
+        total_goals = self.get_team_stat_sum(team, "goals")
 
         second_half_goals = total_goals - ht_goals
 
-        return second_half_goals / games
+        return second_half_goals
 
-    def total_cards_per_game(self, team):
+    def goals_second_half_per_game(self, team):
+        total = self.goals_second_half_sum(team)
+
+        games = self.get_games_played(team)
+
+        return total / games
+
+    def total_cards_sum(self, team):
         if team not in self.team_list:
             raise ValueError(
                 "Team not in the dataset. Teams available: " + str(self.team_list)
             )
 
-        yellow = self.get_total_stat_sum(team, "yellow_cards")
-        red = self.get_total_stat_sum(team, "red_cards")
+        yellow = self.get_team_stat_sum(team, "yellow_cards")
+        red = self.get_team_stat_sum(team, "red_cards")
         total = yellow + red
+
+        return total
+
+    def total_cards_per_game(self, team):
+        total = self.total_cards_sum(team)
 
         games = self.get_games_played(team)
 

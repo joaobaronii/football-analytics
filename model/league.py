@@ -87,7 +87,7 @@ class League:
         results = {"W": int(win_sum), "L": int(loss_sum), "D": int((draw_sum))}
         return results
 
-    def get_total_stat_sum(self, team, stat):
+    def get_team_stat_sum(self, team, stat):
         if stat not in self.stat_map:
             raise ValueError(
                 "Stat not in the dataset. Stats available: "
@@ -115,8 +115,8 @@ class League:
 
         return games_played
 
-    def get_total_stat_mean(self, team, stat):
-        total = self.get_total_stat_sum(team, stat)
+    def get_team_stat_mean(self, team, stat):
+        total = self.get_team_stat_sum(team, stat)
 
         games = self.get_games_played(team)
 

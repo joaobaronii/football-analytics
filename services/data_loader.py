@@ -4,7 +4,7 @@ import pandas as pd
 def load_brasileirao():
     columns = ["Season", "Date", "Home", "Away", "HG", "AG", "Res"]
     # HG = home goals; AG = away goals; Res = result
-    print("Loading Brasileirao data...")
+    print("\nLoading Brasileirao data...")
     df = pd.read_csv("data/brasileirao.csv", usecols=columns)
     print("Data successfully loaded!")
 
@@ -42,7 +42,7 @@ def load_premier_25_26():
     # FTH/AG = full time home/away goals; FTR = full time result; HTH/AG = half time home/away goals; H/AS = home/away shots; H/AST = home/away shots on target;
     # H/AC = home/away corners; H/AF = H/A fouls committed; H/AY = H/A yellow cards; H/AR = H/A red cards
 
-    print("Loading Premier League 25/26 data...")
+    print("\nLoading Premier League 25/26 data...")
     df = pd.read_csv("data/premierleague25-26.csv", usecols=columns)
     print("Data successfully loaded!")
 

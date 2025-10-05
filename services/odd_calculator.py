@@ -33,6 +33,7 @@ def calculate_house_edge(fair_odd, house_odd):
     return edge * 100
 
 def calculate_all(mean, threshold, mode, house_odd=None):
+    house_edge = None
     prob = calculate_prob(mean, threshold, mode)
 
     fair_odd = calculate_odd(prob)
