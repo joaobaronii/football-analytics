@@ -29,20 +29,28 @@ def handle_team(
     mode=None,
     house_odd=None,
 ):
+    if league.df.empty:
+        error_response = {"error": f"'{team}' not found in database."}
+        return error_response, 404
+
     league.df = league.by_team(team)
 
     total = None
     per_game = None
 
-    if stat == "cards":
-        total = league.total_cards_sum(team)
-        per_game = league.total_cards_per_game(team)
-    elif stat == "second half goals":
-        total = league.goals_second_half_sum(team)
-        per_game = league.goals_second_half_per_game(team)
-    else:
-        total = league.get_team_stat_sum(team, stat)
-        per_game = league.get_team_stat_mean(team, stat)
+    try:
+        if stat == "cards":
+            total = league.total_cards_sum(team)
+            per_game = league.total_cards_per_game(team)
+        elif stat == "second half goals":
+            total = league.goals_second_half_sum(team)
+            per_game = league.goals_second_half_per_game(team)
+        else:
+            total = league.get_team_stat_sum(team, stat)
+            per_game = league.get_team_stat_mean(team, stat)
+    except (KeyError, AttributeError):
+        error_response = {"error": f"Invalid or not supported stat: '{stat}'."}
+        return error_response, 400
 
     if calculator_status:
         odd_info = handle_calculator(per_game, threshold, mode, house_odd)
@@ -50,15 +58,20 @@ def handle_team(
     else:
         response = {"per game": round(per_game, 2), "sum": int(total)}
 
-    return response
+    return response, 200
 
 
-def handle_h2h(league: League, team1, team2, only_home=False, start_year=None, end_year=None):
-
+def handle_h2h(
+    league: League, team1, team2, only_home=False, start_year=None, end_year=None
+):
     if league.name == "Brasileirao" and start_year and end_year:
         league.df = league.by_year(start_year, end_year)
 
     league.df = league.head_to_head(team1, team2, only_home)
+
+    if league.df.empty:
+        error_response = {"error": f"Match between '{team1}' and '{team2}' not found."}
+        return error_response, 404
 
     summary1 = league.get_result_summary(team1)
     summary2 = league.get_result_summary(team2)
@@ -68,13 +81,16 @@ def handle_h2h(league: League, team1, team2, only_home=False, start_year=None, e
         team2: {"wins": summary2["W"], "losses": summary2["L"], "draws": summary2["D"]},
     }
 
-    return response
+    return response, 200
 
 
 def handle_league(league: League, stat, start_year=None, end_year=None):
-
     if league.name == "Brasileirao" and start_year and end_year:
         league.df = league.by_year(start_year, end_year)
+
+    if stat not in league.stat_map:
+        error_response = {"error": f"Invalid stat: '{stat}'."}
+        return error_response, 400
 
     column_map = league.stat_map[stat]
     home_col = column_map["home"]
@@ -85,4 +101,4 @@ def handle_league(league: League, stat, start_year=None, end_year=None):
 
     response = {"per_game": round(per_game, 2), "sum": int(total)}
 
-    return response
+    return response, 200

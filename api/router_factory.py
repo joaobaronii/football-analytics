@@ -1,4 +1,5 @@
 from fastapi import APIRouter, Depends
+from fastapi.responses import JSONResponse
 
 import services.api_handlers as handler
 from model.league import League
@@ -25,9 +26,14 @@ def create_league_router(prefix: str, tags: list[str], league_dependency):
     ):
         calculator_status = bool(house_odd and threshold and mode)
 
-        return handler.handle_team(
-            league, team, stat, calculator_status, threshold, mode, house_odd
-        )
+        try:
+            data, status_code = handler.handle_team(
+                league, team, stat, calculator_status, threshold, mode, house_odd
+            )
+            return JSONResponse(content=data, status_code=status_code)
+        except Exception as e:
+            error = {"error": "An internal server error occurred", "details": str(e)}
+            return JSONResponse(content=error, status_code=500)
 
     @router.get("/h2h/{team1}/{team2}")
     def get_team_summary(
@@ -38,7 +44,14 @@ def create_league_router(prefix: str, tags: list[str], league_dependency):
         year_end: int = None,
         league: League = Depends(league_dependency),
     ):
-        return handler.handle_h2h(league, team1, team2, only_home, year_start, year_end)
+        try:
+            data, status_code = handler.handle_h2h(
+                league, team1, team2, only_home, year_start, year_end
+            )
+            return JSONResponse(content=data, status_code=status_code)
+        except Exception as e:
+            error = {"error": "An internal server error occurred", "details": str(e)}
+            return JSONResponse(content=error, status_code=500)
 
     @router.get("/stat")
     def get_all_stats(league: League = Depends(league_dependency)):
@@ -54,6 +67,13 @@ def create_league_router(prefix: str, tags: list[str], league_dependency):
         end_year: int = None,
         league: League = Depends(league_dependency),
     ):
-        return handler.handle_league(league, stat, start_year, end_year)
+        try:
+            data, status_code = handler.handle_league(
+                league, stat, start_year, end_year
+            )
+            return JSONResponse(content=data, status_code=status_code)
+        except Exception as e:
+            error = {"error": "An internal server error occurred", "details": str(e)}
+            return JSONResponse(content=error, status_code=500)
 
     return router
