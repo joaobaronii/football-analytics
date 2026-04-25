@@ -17,7 +17,6 @@ premier_league_router = create_league_router(
     league_dependency=get_premier_league
 )
 
-# Inclua os routers gerados na sua aplicação
 app.include_router(premier_league_router)
 app.include_router(brasileirao_router)
 
